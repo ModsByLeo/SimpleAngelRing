@@ -7,7 +7,11 @@
   "authors": [
     "ADudeCalledLeo"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://github.com/Leo40Git/SimpleAngelRing",
+    "sources": "https://github.com/Leo40Git/SimpleAngelRing",
+    "issues": "https://github.com/Leo40Git/SimpleAngelRing/issues"
+  },
   "license": "MIT",
   "icon": "assets/simpleangelring/icon.png",
   "environment": "*",
@@ -27,8 +31,9 @@
   },
   "custom": {
     "modupdater": {
-      "strategy": "curseforge",
-      "projectID": 434708
+      "strategy": "github",
+      "owner": "Leo40Git",
+      "repository": "SimpleAngelRing"
     }
   }
 }
