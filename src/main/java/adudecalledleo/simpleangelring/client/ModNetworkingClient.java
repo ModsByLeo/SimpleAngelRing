@@ -17,8 +17,10 @@ public final class ModNetworkingClient {
 
     public static void register() {
         ClientPlayConnectionEvents.INIT.register((handler, client) -> {
-            if (client.isIntegratedServerRunning())
-                ModConfig.setRemoteConfig(null);
+            client.execute(() -> {
+                if (client.isIntegratedServerRunning())
+                    ModConfig.setRemoteConfig(null);
+            });
         });
         ClientPlayNetworking.registerGlobalReceiver(PACKET_CONFIG_VERSION, (client, handler, buf, responseSender) -> {
             PacketByteBuf responseBuf = PacketByteBufs.create();
