@@ -92,21 +92,20 @@ public final class SimpleAngelRing implements ModInitializer {
     public static final AbilitySource ABILITY_SOURCE = Pal.getAbilitySource(MOD_ID, "angel_ring");
 
     public static final class ModSoundEvents {
-        public static final SoundEvent ANGEL_RING_ENABLED = new SoundEvent(new Identifier(MOD_ID, "angel_ring.enabled"));
-        public static final SoundEvent ANGEL_RING_DISABLED = new SoundEvent(new Identifier(MOD_ID, "angel_ring.disabled"));
+        public static final Identifier ANGEL_RING_ENABLED_ID = new Identifier(MOD_ID, "angel_ring.enabled");
+        public static final Identifier ANGEL_RING_DISABLED_ID = new Identifier(MOD_ID, "angel_ring.disabled");
+
+        public static final SoundEvent ANGEL_RING_ENABLED = new SoundEvent(ANGEL_RING_ENABLED_ID);
+        public static final SoundEvent ANGEL_RING_DISABLED = new SoundEvent(ANGEL_RING_DISABLED_ID);
     }
 
     @Override
     public void onInitialize() {
+        Registry.register(Registry.SOUND_EVENT, ModSoundEvents.ANGEL_RING_ENABLED_ID, ModSoundEvents.ANGEL_RING_ENABLED);
+        Registry.register(Registry.SOUND_EVENT, ModSoundEvents.ANGEL_RING_DISABLED_ID, ModSoundEvents.ANGEL_RING_DISABLED);
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "angel_ring"), ITEM);
-        registerSoundEvents(ModSoundEvents.ANGEL_RING_ENABLED, ModSoundEvents.ANGEL_RING_DISABLED);
         ServerTickEvents.START_WORLD_TICK.register(this::onStartWorldTick);
         LOGGER.info("Angel Rings: So easy, a Spider could do it. [Simple Angel Ring has initialized!]");
-    }
-
-    private void registerSoundEvents(SoundEvent... soundEvents) {
-        for (SoundEvent soundEvent : soundEvents)
-            Registry.register(Registry.SOUND_EVENT, soundEvent.getId(), soundEvent);
     }
 
     private void onStartWorldTick(ServerWorld world) {
