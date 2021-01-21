@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "adudecalledleo.simpleangelring.SimpleAngelRing"
+      "adudecalledleo.simpleangelring.Initializer"
     ]
   },
   "depends": {
