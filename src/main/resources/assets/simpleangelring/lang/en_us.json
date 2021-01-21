@@ -5,5 +5,16 @@
   "item.simpleangelring.angel_ring.tooltip[0]": "Grants creative flight and disables fall damage,",
   "item.simpleangelring.angel_ring.tooltip[1]": "as long as it's enabled in your inventory.",
   "item.simpleangelring.angel_ring.tooltip[2]": "Use while sneaking to toggle.",
-  "item.simpleangelring.angel_ring.tooltip.disabled": "(DISABLED!)"
+  "item.simpleangelring.angel_ring.tooltip.disabled": "(DISABLED!)",
+  "text.simpleangelring.config_version_outdated": "Your version of Simple Angel Ring is incompatible with the server's version of Simple Angel Ring.",
+  "text.autoconfig.simpleangelring.title": "Simple Angel Ring Configuration",
+  "text.autoconfig.simpleangelring.option.chargeEnabled": "Charge Enabled",
+  "text.autoconfig.simpleangelring.option.chargeMax": "Maximum Charge",
+  "text.autoconfig.simpleangelring.option.chargeRegenTicks": "Ticks Between Recharge",
+  "text.autoconfig.simpleangelring.option.chargeRegenWhenFlying": "Recharge During Flight",
+  "text.autoconfig.simpleangelring.option.chargeRegenWhenFlying.never": "Never",
+  "text.autoconfig.simpleangelring.option.chargeRegenWhenFlying.always": "Always",
+  "text.autoconfig.simpleangelring.option.chargeRegenWhenFlying.whenNearBeacon": "When Near Active Beacon",
+  "text.autoconfig.simpleangelring.option.chargeRegenBoostedByBeacon": "Active Beacon Boosts Recharge",
+  "text.autoconfig.simpleangelring.option.chargeRegenTicksBoosted": "Ticks Between Recharge (Boosted)"
 }

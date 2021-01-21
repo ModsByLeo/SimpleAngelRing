@@ -34,6 +34,16 @@ public final class AngelRingItem extends Item {
         return ringEnabled;
     }
 
+    public static int getRingRegenTicks(ItemStack stack) {
+        if (stack.isEmpty() || stack.getItem() != Initializer.ANGEL_RING)
+            return 0;
+        int regenTicks = 0;
+        CompoundTag tag = stack.getTag();
+        if (tag != null && tag.contains("regenTicks", NbtType.NUMBER))
+            regenTicks = tag.getInt("regenTicks");
+        return regenTicks;
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
