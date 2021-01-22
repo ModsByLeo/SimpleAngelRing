@@ -3,7 +3,7 @@
   "id": "simpleangelring",
   "version": "${version}",
   "name": "Simple Angel Ring",
-  "description": "Adds an Angel Ring that grants creative flight.",
+  "description": "Adds an Angel Ring that grants creative flight. Angel Ring texture by LordDeatHunter.",
   "authors": [
     "ADudeCalledLeo"
   ],
