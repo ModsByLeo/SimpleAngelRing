@@ -4,6 +4,6 @@ package adudecalledleo.simpleangelring.config;
 final class ModConfigStorage {
     private ModConfigStorage() { }
 
-    public static final long VERSION = 1;
-    public static ModConfig remoteConfig;
+    public static final long VERSION = 2;
+    public static ModConfigServer remoteConfig;
 }

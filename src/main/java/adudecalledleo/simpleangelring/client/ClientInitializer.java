@@ -3,7 +3,7 @@ package adudecalledleo.simpleangelring.client;
 import adudecalledleo.simpleangelring.Initializer;
 import adudecalledleo.simpleangelring.config.ChargeRegenWhenFlyingBehavior;
 import adudecalledleo.simpleangelring.config.ModConfig;
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 
-import static me.sargunvohra.mcmods.autoconfig1u.util.Utils.getUnsafely;
-import static me.sargunvohra.mcmods.autoconfig1u.util.Utils.setUnsafely;
+import static me.shedaniel.autoconfig.util.Utils.getUnsafely;
+import static me.shedaniel.autoconfig.util.Utils.setUnsafely;
 
 @Environment(EnvType.CLIENT)
 public final class ClientInitializer implements ClientModInitializer {

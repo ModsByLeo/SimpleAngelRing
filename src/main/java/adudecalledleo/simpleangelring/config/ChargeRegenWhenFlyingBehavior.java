@@ -13,6 +13,6 @@ public enum ChargeRegenWhenFlyingBehavior {
     }
 
     public Text toText() {
-        return new TranslatableText("text.autoconfig.simpleangelring.option.chargeRegenWhenFlying." + key);
+        return new TranslatableText("text.autoconfig.simpleangelring.option.server.chargeRegenWhenFlying." + key);
     }
 }
