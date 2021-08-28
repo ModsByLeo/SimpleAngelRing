@@ -1,19 +1,19 @@
 package adudecalledleo.simpleangelring.item;
 
-import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.Trinket;
 import dev.emi.trinkets.api.TrinketItem;
+import dev.emi.trinkets.api.TrinketsApi;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public final class AngelRingTrinketItem extends AngelRingItem implements Trinket {
-    public AngelRingTrinketItem(Settings settings) {
+public final class TrinketAngelRingItem extends AngelRingItem implements Trinket {
+    public TrinketAngelRingItem(Settings settings) {
         super(settings);
+        TrinketsApi.registerTrinket(this, this);
         //DispenserBlock.registerBehavior(this, TrinketItem.TRINKET_DISPENSER_BEHAVIOR);
     }
 

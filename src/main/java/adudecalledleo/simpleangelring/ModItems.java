@@ -1,7 +1,8 @@
 package adudecalledleo.simpleangelring;
 
 import adudecalledleo.simpleangelring.item.AngelRingItem;
-import adudecalledleo.simpleangelring.item.AngelRingTrinketItem;
+import adudecalledleo.simpleangelring.item.TrinketAngelRingItem;
+import adudecalledleo.simpleangelring.item.StandardAngelRingItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Rarity;
@@ -22,9 +23,9 @@ public final class ModItems {
                 .rarity(Rarity.EPIC)
                 .group(ItemGroup.TRANSPORTATION);
         if (TRINKETS_LOADED)
-            return new AngelRingTrinketItem(settings);
+            return new TrinketAngelRingItem(settings);
         else
-            return new AngelRingItem(settings);
+            return new StandardAngelRingItem(settings);
     }
 
     public static void register() {
