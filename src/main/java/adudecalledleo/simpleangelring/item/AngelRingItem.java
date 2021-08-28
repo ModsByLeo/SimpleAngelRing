@@ -18,14 +18,31 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import static adudecalledleo.simpleangelring.Initializer.TRINKETS_LOADED;
 import static adudecalledleo.simpleangelring.ModItems.ANGEL_RING;
 
 public abstract class AngelRingItem extends Item {
     public AngelRingItem(Settings settings) {
         super(settings);
+    }
+
+    // this is horrible and I hate it
+    @SuppressWarnings("unchecked")
+    public static AngelRingItem create(Item.Settings settings) {
+        String className = "adudecalledleo.simpleangelring.item.VanillaAngelRingItem";
+        if (TRINKETS_LOADED)
+            className = "adudecalledleo.simpleangelring.item.TrinketAngelRingItem";
+        try {
+            Class<AngelRingItem> clazz = (Class<AngelRingItem>) Class.forName(className);
+            Constructor<AngelRingItem> constructor = clazz.getConstructor(Item.Settings.class);
+            return constructor.newInstance(settings);
+        } catch (ClassNotFoundException | ClassCastException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new InternalError("Failed to create angel ring item instance", e);
+        }
     }
 
     public static boolean isRingEnabled(ItemStack stack) {

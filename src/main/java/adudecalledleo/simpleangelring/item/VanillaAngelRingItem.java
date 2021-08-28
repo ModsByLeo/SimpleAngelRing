@@ -6,8 +6,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public final class StandardAngelRingItem extends AngelRingItem {
-    public StandardAngelRingItem(Settings settings) {
+public final class VanillaAngelRingItem extends AngelRingItem {
+    public VanillaAngelRingItem(Settings settings) {
         super(settings);
     }
 
