@@ -11,7 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -36,7 +36,7 @@ public class AngelRingItem extends Item {
         if (stack.isEmpty() || stack.getItem() != ANGEL_RING)
             return false;
         boolean ringEnabled = true;
-        CompoundTag tag = stack.getTag();
+        NbtCompound tag = stack.getTag();
         if (tag != null && tag.contains("enabled", NbtType.BYTE))
             ringEnabled = tag.getBoolean("enabled");
         return ringEnabled;
@@ -46,7 +46,7 @@ public class AngelRingItem extends Item {
         if (stack.isEmpty() || stack.getItem() != ANGEL_RING)
             return 0;
         int regenTicks = 0;
-        CompoundTag tag = stack.getTag();
+        NbtCompound tag = stack.getTag();
         if (tag != null && tag.contains("regenTicks", NbtType.NUMBER))
             regenTicks = tag.getInt("regenTicks");
         return regenTicks;
