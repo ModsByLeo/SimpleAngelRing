@@ -149,7 +149,7 @@ public final class Initializer implements ModInitializer {
         } else if (isFlying && ringCharge < ringStack.getMaxDamage())
             ringCharge++;
         ringStack.setDamage(ringCharge);
-        ringStack.getOrCreateTag().putInt("regenTicks", ringRegenTicks);
+        ringStack.getOrCreateNbt().putInt("regenTicks", ringRegenTicks);
         ModConfigClient clientSettings = getClientSettings(player);
         if (clientSettings != null) {
             if (clientSettings.warnOnLowCharge) {

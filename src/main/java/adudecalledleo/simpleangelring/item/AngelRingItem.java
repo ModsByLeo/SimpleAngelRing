@@ -36,7 +36,7 @@ public class AngelRingItem extends Item {
         if (stack.isEmpty() || stack.getItem() != ANGEL_RING)
             return false;
         boolean ringEnabled = true;
-        NbtCompound tag = stack.getTag();
+        NbtCompound tag = stack.getNbt();
         if (tag != null && tag.contains("enabled", NbtType.BYTE))
             ringEnabled = tag.getBoolean("enabled");
         return ringEnabled;
@@ -46,7 +46,7 @@ public class AngelRingItem extends Item {
         if (stack.isEmpty() || stack.getItem() != ANGEL_RING)
             return 0;
         int regenTicks = 0;
-        NbtCompound tag = stack.getTag();
+        NbtCompound tag = stack.getNbt();
         if (tag != null && tag.contains("regenTicks", NbtType.NUMBER))
             regenTicks = tag.getInt("regenTicks");
         return regenTicks;
@@ -68,7 +68,7 @@ public class AngelRingItem extends Item {
                             : ModSoundEvents.ANGEL_RING_ENABLED,
                     SoundCategory.PLAYERS, 1, wasRingEnabled ? 1.2F : 1);
         else {
-            stack.getOrCreateTag().putBoolean("enabled", !wasRingEnabled);
+            stack.getOrCreateNbt().putBoolean("enabled", !wasRingEnabled);
             user.sendMessage(new TranslatableText(getTranslationKey() + (wasRingEnabled ? ".disabled" : ".enabled")),
                     true);
         }
