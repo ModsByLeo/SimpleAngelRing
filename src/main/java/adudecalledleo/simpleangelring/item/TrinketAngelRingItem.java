@@ -14,7 +14,6 @@ public final class TrinketAngelRingItem extends AngelRingItem implements Trinket
     public TrinketAngelRingItem(Settings settings) {
         super(settings);
         TrinketsApi.registerTrinket(this, this);
-        //DispenserBlock.registerBehavior(this, TrinketItem.TRINKET_DISPENSER_BEHAVIOR);
     }
 
     @Override
@@ -28,13 +27,4 @@ public final class TrinketAngelRingItem extends AngelRingItem implements Trinket
             return super.use(world, user, hand);
         }
     }
-
-    /*
-    @Override
-    public void tick(PlayerEntity player, ItemStack stack) {
-        if (player instanceof ServerPlayerEntity) {
-            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-            Initializer.addRingStack(serverPlayer.getServerWorld(), serverPlayer, stack);
-        }
-    }*/
 }

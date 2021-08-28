@@ -29,8 +29,6 @@ public final class ModItems {
     }
 
     public static void register() {
-        if (TRINKETS_LOADED)
-            TrinketsCompat.registerRingTrinketSlots();
         Registry.register(Registry.ITEM, id("angel_ring"), ANGEL_RING);
     }
 }

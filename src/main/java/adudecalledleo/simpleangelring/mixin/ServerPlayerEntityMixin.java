@@ -40,9 +40,5 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Se
     @Inject(method = "tick", at = @At("HEAD"))
     public void resetNearBeacon(CallbackInfo ci) {
         nearBeacon = false;
-        ItemStack cursorStack = inventory.getCursorStack();
-        if (!cursorStack.isEmpty() && cursorStack.getItem() == ANGEL_RING)
-            //noinspection ConstantConditions
-            Initializer.addRingStack(getServerWorld(), ((ServerPlayerEntity) ((Object) this)), cursorStack);
     }
 }

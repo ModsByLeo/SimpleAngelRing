@@ -1,7 +1,7 @@
 package adudecalledleo.simpleangelring.config;
 
 import adudecalledleo.simpleangelring.ModItems;
-import adudecalledleo.simpleangelring.mixin.ItemAccessor;
+import adudecalledleo.simpleangelring.duck.ItemHooks;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -28,7 +28,7 @@ public final class ModConfigServer implements ConfigData {
 
     static void applyConfig(ModConfigServer config) {
         if (remoteConfig == null || config == remoteConfig)
-            ((ItemAccessor) ModItems.ANGEL_RING).setMaxDamage(config.chargeEnabled ? config.chargeMax : 0);
+            ItemHooks.setMaxDamage(ModItems.ANGEL_RING, config.chargeEnabled ? config.chargeMax : 0);
     }
 
     public PacketByteBuf toByteBuf() {

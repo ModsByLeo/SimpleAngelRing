@@ -8,15 +8,19 @@ import adudecalledleo.simpleangelring.item.AngelRingItem;
 import io.github.ladysnake.pal.AbilitySource;
 import io.github.ladysnake.pal.Pal;
 import io.github.ladysnake.pal.VanillaAbilities;
-import it.unimi.dsi.fastutil.objects.Object2ReferenceMap;
 import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleFadeS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -24,10 +28,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.UUID;
 
 import static adudecalledleo.simpleangelring.ModItems.ANGEL_RING;
@@ -47,8 +49,6 @@ public final class Initializer implements ModInitializer {
     }
 
     private static final Object2ReferenceOpenHashMap<UUID, ModConfigClient> CLIENT_SETTINGS =
-            new Object2ReferenceOpenHashMap<>();
-    private static final Object2ReferenceOpenHashMap<ServerWorld, Object2ReferenceOpenHashMap<ServerPlayerEntity, ItemStack>> RING_STACKS =
             new Object2ReferenceOpenHashMap<>();
     private static final ObjectOpenHashSet<UUID> WARNED_PLAYERS = new ObjectOpenHashSet<>();
     private static ModConfigServer configToResync;
@@ -81,31 +81,48 @@ public final class Initializer implements ModInitializer {
         return CLIENT_SETTINGS.get(player.getUuid());
     }
 
-    public static void addRingStack(ServerWorld world, ServerPlayerEntity player, ItemStack ringStack) {
-        RING_STACKS.computeIfAbsent(world, serverWorld -> new Object2ReferenceOpenHashMap<>()).put(player, ringStack);
-    }
-
     public static void resyncConfig(ModConfigServer config) {
         configToResync = config;
     }
 
+    private static final Hand[] HANDS = Hand.values();
+    public static ItemStack getRingStack(ServerPlayerEntity player) {
+        if (!player.interactionManager.isSurvivalLike())
+            return ItemStack.EMPTY;
+
+        ItemStack cursorStack = player.currentScreenHandler.getCursorStack();
+        if (!cursorStack.isEmpty() && cursorStack.isOf(ANGEL_RING))
+            return cursorStack;
+
+        for (Hand hand : HANDS) {
+            ItemStack stack = player.getStackInHand(hand);
+            if (!stack.isEmpty() && stack.isOf(ANGEL_RING))
+                return stack;
+        }
+
+        for (ItemStack stack : player.getInventory().main) {
+            if (!stack.isEmpty() && stack.isOf(ANGEL_RING))
+                return stack;
+        }
+
+        if (TRINKETS_LOADED)
+            return TrinketsCompat.getRingTrinket(player);
+
+        return ItemStack.EMPTY;
+    }
+
     private void onEndWorldTick(ServerWorld world) {
-        Object2ReferenceOpenHashMap<ServerPlayerEntity, ItemStack> worldMap = RING_STACKS.get(world);
-        if (worldMap == null)
-            return;
-        for (Object2ReferenceMap.Entry<ServerPlayerEntity, ItemStack> entry : worldMap.object2ReferenceEntrySet()) {
-            ServerPlayerEntity player = entry.getKey();
-            if (!player.interactionManager.isSurvivalLike())
+        for (ServerPlayerEntity player : world.getPlayers()) {
+            ItemStack ringStack = getRingStack(player);
+            if (ringStack.isEmpty()) {
+                Pal.revokeAbility(player, VanillaAbilities.ALLOW_FLYING, ANGEL_RING_SOURCE);
                 continue;
-            ItemStack ringStack = entry.getValue();
-            if (ringStack == null)
-                continue;
+            }
             if (updateRingStack(player, ringStack))
                 Pal.grantAbility(player, VanillaAbilities.ALLOW_FLYING, ANGEL_RING_SOURCE);
             else
                 Pal.revokeAbility(player, VanillaAbilities.ALLOW_FLYING, ANGEL_RING_SOURCE);
         }
-        worldMap.clear();
     }
 
     private void onEndServerTick(MinecraftServer server) {
@@ -118,7 +135,7 @@ public final class Initializer implements ModInitializer {
     }
 
     private static boolean updateRingStack(ServerPlayerEntity player, ItemStack ringStack) {
-        if (ringStack.isEmpty() || ringStack.getItem() != ANGEL_RING)
+        if (ringStack.isEmpty() || !ringStack.isOf(ANGEL_RING))
             return false;
         final ModConfigServer config = ModConfigServer.get();
         if (!config.chargeEnabled)
@@ -166,10 +183,10 @@ public final class Initializer implements ModInitializer {
 
     private static void sendLowChargeWarning(ServerPlayerEntity player) {
         ServerPlayNetworkHandler handler = player.networkHandler;
-        handler.sendPacket(new TitleS2CPacket(TitleS2CPacket.Action.TITLE, new TranslatableText("text.simpleangelring.low_charge")
+        handler.sendPacket(new TitleS2CPacket(new TranslatableText("text.simpleangelring.low_charge")
                 .styled(style -> style.withColor(Formatting.RED).withBold(true))));
-        handler.sendPacket(new TitleS2CPacket(TitleS2CPacket.Action.SUBTITLE, new TranslatableText("text.simpleangelring.low_charge.subtitle")
+        handler.sendPacket(new SubtitleS2CPacket(new TranslatableText("text.simpleangelring.low_charge.subtitle")
                 .styled(style -> style.withColor(Formatting.GRAY))));
-        handler.sendPacket(new TitleS2CPacket(5, 100, 5));
+        handler.sendPacket(new TitleFadeS2CPacket(5, 100, 5));
     }
 }

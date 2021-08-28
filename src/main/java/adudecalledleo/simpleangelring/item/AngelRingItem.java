@@ -29,7 +29,7 @@ public abstract class AngelRingItem extends Item {
     }
 
     public static boolean isRingEnabled(ItemStack stack) {
-        if (stack.isEmpty() || stack.getItem() != ANGEL_RING)
+        if (stack.isEmpty() || !stack.isOf(ANGEL_RING))
             return false;
         boolean ringEnabled = true;
         NbtCompound tag = stack.getNbt();
@@ -39,7 +39,7 @@ public abstract class AngelRingItem extends Item {
     }
 
     public static int getRingRegenTicks(ItemStack stack) {
-        if (stack.isEmpty() || stack.getItem() != ANGEL_RING)
+        if (stack.isEmpty() || !stack.isOf(ANGEL_RING))
             return 0;
         int regenTicks = 0;
         NbtCompound tag = stack.getNbt();
